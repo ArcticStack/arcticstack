@@ -11,6 +11,7 @@ venv-molecule/
 MANIFEST
 dist
 rpm-build
+VERSION
 
 # Emacs backup and autosave files...
 *~
