@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DEFAULT_VERSION=v0.1.0
+
+# If in git repo, use git-describe
+if test -d .git
+then
+	V=$(git describe --dirty --match "v[0-9]*" 2>/dev/null)
+else
+	V="${DEFAULT_VERSION}"
+fi
+
+V=${V#v*}
+V=${V//-/.}
+
+if ! test -f VERSION
+then
+	echo >&2 "ARCTICSTACK_VERSION = ${V}"
+	echo "ARCTICSTACK_VERSION = ${V}" > VERSION
+fi
