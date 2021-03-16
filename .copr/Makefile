@@ -4,8 +4,12 @@ specfile := $(rpmbuild_spec)/arcticstack.spec
 spec_in := resources/packaging/arcticstack.spec.in
 
 prepare:
-	dnf install rpm-build git -y
 	mkdir -p $(rpmbuild_src) $(rpmbuild_spec)
+# Packages must already be installed in the container
+ifeq ($(platform), container)
+else
+	dnf install rpm-build git -y
+endif
 
 VERSION: prepare
 	@sh ./resources/packaging/get_version
