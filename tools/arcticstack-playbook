@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-export ANSIBLE_CONFIG=/etc/bluebanquise
+export ANSIBLE_CONFIG=/etc/arcticstack
 
 usage() {
     echo "Usage:
