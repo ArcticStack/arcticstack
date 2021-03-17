@@ -4,6 +4,9 @@
 nic_nmcli ofed ofed_sm openldap_client openldap_server powerman prometheus_client \
 prometheus_server report root_password singularity slurm sssd users_basic
 
+# Turn off the brp-python-bytecompile automagic
+%global _python_bytecompile_extra 0
+
 Name:           arcticstack
 Version:        %{version}
 Release:        1%{?dist}
