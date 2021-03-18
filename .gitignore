@@ -6,6 +6,7 @@ pxe
 
 ## VirtualEnv ##
 venv-molecule/
+venv/
 
 # RPM stuff...
 MANIFEST
