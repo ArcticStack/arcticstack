@@ -19,14 +19,14 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'BlueBanquise Documentation'
-copyright = u'2019, Benoît Leveugle, Johnny Keats'
+project = u'ArcticStack'
+copyright = u'2019, Benoît Leveugle, Johnny Keats | 2021, Bruno Travouillon'
 author = u'Benoît Leveugle, Johnny Keats, Bruno Travouillon, Tim Gellner, David Pieters'
 
 # The short X.Y version
-version = u'1.3'
+version = u'0.1'
 # The full version, including alpha/beta/rc tags
-release = u'1.3.0'
+release = u'0.1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -82,7 +82,7 @@ pygments_style = None
 #     'logo': 'logo.png',
 #     'logo_name': 'Training',
 #     }
-html_logo = "logo.png"
+# existexistsjhtml_logo = "logo.png"
 html_theme = "sphinx_rtd_theme"
 html_theme_path = ["_themes", ]
 

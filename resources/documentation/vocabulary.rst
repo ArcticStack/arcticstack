@@ -5,7 +5,7 @@ Vocabulary
 Lets establish few common terms between us before going deeper in technical
 details.
 
-Some words are important in **BlueBanquise**. Most of them are described here.
+Some words are important in **ArcticStack**. Most of them are described here.
 
 Ansible vocabulary
 ==================
@@ -17,20 +17,21 @@ An Ansible **host** (also often referred as a **node**) is a remote host managed
 by Ansible. An **host** can be a physical server, but also a VM or something
 else.
 
-Hosts are defined in */etc/bluebanquise/inventory/cluster/nodes*.
+By default, hosts are defined in */etc/arcticstack/inventory/cluster/nodes*.
 
-Please do a difference between an Ansible managed host, and a host.
-All equipment that can have an ip address on the network are considered "host",
-but only those with an ssh + python capability and on which we will use Ansible
-to deploy a configuration are considered "Ansible managed host".
-They are declared the same way in the stack inventory.
+Note there is a difference between an Ansible managed host and a host.
+
+Any equipment with an ip address on the network are considered "host", but only
+those with an ssh access + python capability and on which we will use Ansible
+to deploy a configuration are considered "Ansible managed host". They are
+declared the same way in the stack inventory.
 
 Group
 -----
 
-An Ansible **group** is a logical aggregation of hosts.
-For example, system administrator can define a group "database_servers" that
-would contain hosts "database1" and "database2".
+An Ansible **group** is a logical aggregation of hosts. For example, system
+administrator can define a group "database_servers" that would contain hosts
+"database1" and "database2".
 
 **Groups** allow Ansible to provide dedicated **variables** to member hosts or
 execute tasks on a set of hosts.
@@ -192,22 +193,19 @@ Inventory, roles, and playbooks
 Inventory
 ^^^^^^^^^
 
-The Ansible inventory is the directory that contains Ansible variables and hosts
-definitions. In **BlueBanquise**, default path is /etc/bluebanquise/inventory.
+The Ansible inventory contains Ansible variables and Ansible managed hosts
+definitions. Default path is /etc/arcticstack/inventory.
 
 Inventory is the **DATA**.
 
 Roles
 ^^^^^
 
-An Ansible role is a list of tasks to do to achieve a purpose.
-For example, there will be a role called dhcp_server, that contains task to
-install, configure and start the dhcp server.
+An Ansible role is a list of tasks to run to achieve a purpose. For example,
+there is a role named dhcp_server that contains tasks to install, configure and
+start the dhcp server.
 
-In **BlueBanquise**, default path is /etc/bluebanquise/roles.
-
-Note that /etc/bluebanquise/roles is split in multiple directories, but
-ansible.cfg file is configured to use roles in all of them.
+The roles are installed in the default Ansible roles path.
 
 Roles are the **AUTOMATION LOGIC**.
 
@@ -217,7 +215,7 @@ Playbooks
 An Ansible playbook is simply a list of roles to apply, on a specific host or
 group of hosts. It is a yaml file.
 
-In **BlueBanquise**, default path is /etc/bluebanquise/playbooks.
+Default path is /etc/arcticstack/playbooks.
 
 Playbooks are your **LIST OF ROLES TO APPLY on your hosts/targets**.
 
@@ -226,26 +224,26 @@ Variables precedence
 
 We are reaching the very important part of the stack.
 
-Ansible has an internal mechanism called **Variables precedence**.
-Simply put: you can define the same variables (same name) multiple times, and
-using this mechanism, some definitions will have priority above others,
-depending of the situation.
+Ansible has an internal mechanism called **Variables precedence**. Simply put:
+you can define the same variables (same name) multiple times, and using this
+mechanism, some definitions will have priority above others, depending of the
+situation.
 
 When a variable is defined in a yml file, the position of the file in the
 ansible inventory is key.
 
-For example, a variable defined in /etc/bluebanquise/inventory/group_vars/all/
+For example, a variable defined in /etc/arcticstack/inventory/group_vars/all/
 will have the less precedence, and a variable defined in
-/etc/bluebanquise/inventory/cluster will have a higher precedence, and so win if
+/etc/arcticstack/inventory/cluster will have a higher precedence, and so win if
 loaded.
 
 The full list of available variables precedence is provided in Ansible
 documentation:
 `variable precedence list <https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable>`_
 
-This feature is key to the stack and key for system administrator to manipulate
-the **BlueBanquise** stack the way he/she wants, and *force* automatic
-values if desired.
+This feature is key to the stack and key for system administrators to
+manipulate the configuration the way they want, and *force* automatic values if
+desired.
 
 For example, values can be set by default, and then redefined for some groups of
 hosts without changing the default for all others.
@@ -254,28 +252,14 @@ hosts definitions if dynamic value is not the one expected. Etc.
 
 Inventory can be seen as a giant pizza, in 3D then flatten.
 
-* *Paste* is the variable in /etc/bluebanquise/inventory/group_vars/all
-* Then *large ingredients* comes from /etc/bluebanquise/inventory/group_vars/equipment_myequipment
-* Then *small ingredients* above are the /etc/bluebanquise/inventory/cluster/nodes/
+* *Paste* is the variable in /etc/arcticstack/inventory/group_vars/all
+* Then *large ingredients* comes from /etc/arcticstack/inventory/group_vars/equipment_myequipment
+* Then *small ingredients* above are the /etc/arcticstack/inventory/cluster/nodes/
 * And *pepper and tomatoes* (last layer) is the extra-vars at call.
 
 .. image:: images/pizza_example.svg
 
 I like pizza...
-
-Replace
--------
-
-Ansible and BlueBanquise default hash_behaviour is *replace*.
-
-If using *replace*, when a dictionary is impacted by the variable’s precedence
-mechanism, Ansible overwrite the **full dictionary** if a variable has a higher
-precedence somewhere.
-
-If using *merge*, Ansible will only update the related variable, and keep the
-original dictionary and values for all other variables in this dictionary.
-However, merge is now considered deprecated and is no more default in
-BlueBanquise.
 
 Jinja2
 ------
@@ -303,7 +287,7 @@ networks. Most of the time, icebergs are used to:
 One Iceberg is composed of one or multiple managements servers, **in charge of
 the same pool of nodes**.
 
-**BlueBanquise** support many kinds of configurations, but most common are:
+**ArcticStack** supports many kinds of configurations, but most common are:
 
 One iceberg configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -327,7 +311,7 @@ Multiple icebergs configuration
 
 For advanced systems, (large HPC clusters needing load spreading with unified
 network, enterprise network, etc.), multiple icebergs scenario can be required.
-**BlueBanquise** allows multiple levels of icebergs, for complex needs.
+**ArcticStack** allows nested icebergs (multiple levels), for complex needs.
 
 Manipulating order of network_interfaces defined for each host allows to create
 a unified network so all nodes from all icebergs can communicate through this
@@ -338,8 +322,8 @@ network (most of the time an Interconnect network).
 Equipment profiles
 ------------------
 
-In **BlueBanquise**, nodes are nearly always part of a group starting with
-prefix **equipment_**. These groups are called *equipment profiles*.
+In the ArcticStack inventory, hosts are nearly always part of a group starting
+with prefix **equipment_**. These groups are called *equipment profiles*.
 
 They are used to provide to hosts of this group the **equipment_profile**
 parameters (this includes hosts operating system parameters, kernel parameters,
@@ -349,5 +333,5 @@ authentication parameters.
 These are key groups of the stack.
 
 **It is important** to note that equipment_profiles dictionary **must not** be
-used at an upper level than group_vars in variables precedence.
-**It can, but you must NOT**.
+used at an upper level than group_vars in variables precedence.  **It can, but
+you must NOT**.

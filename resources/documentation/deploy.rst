@@ -1,9 +1,9 @@
 ===================
-Deploy BlueBanquise
+Deploy your cluster
 ===================
 
-At this point, **BlueBanquise** configuration is done. We are ready to deploy
-the cluster.
+At this point, **Ansible** configuration is done. We are ready to deploy the
+cluster.
 
 First step is to deploy configuration on management1 node, and then deploy OS on
 the other systems. Last step will be to deploy configuration on the other
@@ -18,12 +18,12 @@ Get managements playbook
 We are going to use the provided default playbook. This playbook will install
 most of the **core** roles. Enough to deploy first stage of the cluster.
 
-Copy example playbook managements to /etc/bluebanquise/playbooks/:
+Copy example playbook managements to /etc/arcticstack/playbooks/:
 
 .. code-block:: bash
 
-  mkdir /etc/bluebanquise/playbooks/
-  cp -a /etc/bluebanquise/resources/examples/simple_cluster/playbooks/managements.yml /etc/bluebanquise/playbooks/
+  mkdir /etc/arcticstack/playbooks/
+  cp -a /etc/arcticstack/resources/examples/simple_cluster/playbooks/managements.yml /etc/arcticstack/playbooks/
 
 Then, we will ask Ansible to read this playbook, and execute all roles listed
 inside on management1 node (check hosts at top of the file).
@@ -73,7 +73,7 @@ We first ensure our NIC are up, so the repositories part is working.
 
 .. code-block:: bash
 
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml --limit management1 --tags set_hostname,nic
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml --limit management1 --tags set_hostname,nic
 
 Then start your main interface manually. Here enp0s3:
 
@@ -87,21 +87,21 @@ Or on RHEL/CentOS 8:
 
   nmcli con up enp0s3
 
-Once interface is up (check using *ip a* command), setup the BlueBanquise
+Once interface is up (check using *ip a* command), setup the Ansible
 controller:
 
 .. code-block:: bash
 
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml --limit management1 --tags bluebanquise
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml --limit management1 --tags bluebanquise
 
-This will install the requirements to run BlueBanquise (mostly python filters
-for Ansible).
+This will install the requirements to run the roles (mostly python filters for
+Ansible).
 
 Then play the whole playbook:
 
 .. code-block:: bash
 
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml --limit management1
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml --limit management1
 
 And wait...
 
@@ -132,8 +132,8 @@ If your device cannot boot on LAN, use iso or usb image provided on management1
 in /var/www/html/preboot_execution_environment/bin/[x86_64|arm64]. These images
 will start a LAN boot automatically.
 
-In **BlueBanquise**, PXE process has been made so that any kind of hardware able
-to boot PXE, USB or CDrom can start deployment.
+The PXE boot process has been designed so that any kind of hardware able to
+boot PXE, USB or CDrom can start deployment.
 
 You can get more information and a detailed schema in the pxe_stack role section
 of this documentation. Simply explained, the PXE chain is the following (files
@@ -220,7 +220,7 @@ on nodes during deployment).
 
 .. code-block:: bash
 
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml --tags pxe_stack
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml --tags pxe_stack
 
 OS deployment
 -------------
@@ -241,15 +241,15 @@ yes, copy example playbooks:
 
 .. code-block:: bash
 
-  cp -a /etc/bluebanquise/resources/examples/simple_cluster/playbooks/computes.yml /etc/bluebanquise/playbooks/
-  cp -a /etc/bluebanquise/resources/examples/simple_cluster/playbooks/logins.yml /etc/bluebanquise/playbooks/
+  cp -a /etc/arcticstack/resources/examples/simple_cluster/playbooks/computes.yml /etc/arcticstack/playbooks/
+  cp -a /etc/arcticstack/resources/examples/simple_cluster/playbooks/logins.yml /etc/arcticstack/playbooks/
 
 And execute them, using --limit parameter to specify targets them:
 
 .. code-block:: bash
 
-  ansible-playbook /etc/bluebanquise/playbooks/logins.yml
-  ansible-playbook /etc/bluebanquise/playbooks/computes.yml --limit c001,c002,c003,c004
+  ansible-playbook /etc/arcticstack/playbooks/logins.yml
+  ansible-playbook /etc/arcticstack/playbooks/computes.yml --limit c001,c002,c003,c004
 
 You can see that Ansible will work on computes nodes in parallel, using more CPU
 on the management1 node.

@@ -338,13 +338,13 @@ Exist the diskless tool.
 Boot a diskless image
 ---------------------
 
-You can use the bootset bluebanquise tool to setup the boot image for a specific machine:
+You can use the bootset command to setup the boot image for a specific host:
 
 .. code-block:: text
 
-  # bootset -n <machine name> -b diskless -i <diskless image name>
+  # bootset -n <host> -b diskless -i <diskless_image_name>
 
-Please refer you to bootset documentation for further information.
+Please refer to the bootset documentation for further information.
 
 Customizing Livenet image
 -------------------------
@@ -400,12 +400,14 @@ Then execute it into the mounted image using the following command:
 .. code-block:: text
 
   ansible-playbook computes.yml \
-  -i /etc/bluebanquise/inventory/ -i /etc/bluebanquise/internal/ -i /var/tmp/diskless/workdir/space_image/inventory/ \
-  --skip-tags identify -e "image_name=space_image"
+      -i /etc/arcticstack/inventory/ \
+      -i /etc/arcticstack/internal/ \
+      -i /var/tmp/diskless/workdir/space_image/inventory/ \
+      --skip-tags identify -e "image_name=space_image"
 
 Notes:
 
-* The multiple `-i` defines Ansible inventories to gather. By default, in BlueBanquise, the first two inventories are used. We simply add the third one, corresponding to the mounting point.
+* The multiple `-i` defines Ansible inventories to gather. By default, the first two inventories are used. We simply add the third one, corresponding to the mounting point.
 * The `-e` (extra vars) are here to specify to the stack which iceberg and main network are to be used in the configuration of the node. (System cannot know on which nodes the image will be used).
 * The `--skip-tags identify` prevents hostname and static ip to be set, since the image should be generic for multiple hosts.
 

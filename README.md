@@ -6,8 +6,8 @@ operating systems.
 
 This project is a fork of [BlueBanquise](https://bluebanquise.com) 1.4.0.
 BlueBanquise supports a wider range of operating systems and has a simpler
-implementation of Ansible roles which target teaching purposes. The name
-Arctic is a wink to BlueBanquise.
+implementation of Ansible roles which target teaching purposes. The name Arctic
+is a wink to BlueBanquise.
 
 ## Documentation
 

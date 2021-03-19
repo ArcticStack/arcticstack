@@ -11,24 +11,23 @@ Management and main configuration
 Versioning the inventory
 ------------------------
 
-It is a good practice to version the whole /etc/bluebanquise/inventory/
-folder, to keep track of all changes made, and be able to revert in case of
-issues.
+It is a good practice to version the whole /etc/arcticstack/inventory/ folder,
+to keep track of all changes made, and be able to revert in case of issues.
 
-It may even be better to use an external git platform (gitlab,
-etc.) to backup the whole configuration, and be able to push changes from the
-cluster to this platform.
+It may even be better to use an external git platform (gitlab, etc.) to backup
+the whole configuration, and be able to push changes from the cluster to this
+platform.
 
 .. warning::
-  Never use a public repository (like github) to store your inventory, as it
-  contains sensitive data about your infrastructure.
+  Never use a public repository to store your inventory, as it contains
+  sensitive data about your infrastructure.
 
 To create a basic git repository, assuming you already have an existing
-configuration in /etc/bluebanquise/inventory/, do:
+configuration in /etc/arcticstack/inventory/, do:
 
 .. code-block:: text
 
-  cd /etc/bluebanquise/inventory/
+  cd /etc/arcticstack/inventory/
   git init
   git add --all
   git commit --author="my_name <my_name@my_mail.org>" -m "First commit"
@@ -45,7 +44,7 @@ Few useful commands:
 
 .. note::
   If used, it may be also a good idea to version the
-  /etc/bluebanquise/playbooks/ and /etc/bluebanquise/roles/custom/ folders.
+  /etc/arcticstack/playbooks/ folder.
 
 Adding a new repository
 -----------------------
@@ -65,11 +64,11 @@ Then create your new repository folder:
   mkdir /var/www/html/repositories/centos/8/x86_64/my_repo
 
 And add it to your global repositories, into file
-/etc/bluebanquise/inventory/group_vars/all/general_settings/repositories.yml or
+/etc/arcticstack/inventory/group_vars/all/general_settings/repositories.yml or
 if this repository is only associated with a specific equipment group, add it
 into the repositories.yml associated with the equipment_profile associated, for
 example in file
-/etc/bluebanquise/inventory/group_vars/equipment_X/repositories.yml .
+/etc/arcticstack/inventory/group_vars/equipment_X/repositories.yml .
 
 If needed, it is also possible to define minor version based repositories. To
 do so, simply replace the major version by the minor version, and use the
@@ -83,7 +82,7 @@ repository.
 
 .. code-block:: text
 
-  [root@management1 ~]# cat /etc/bluebanquise/inventory/group_vars/equipment_X/equipment_profile.yml | grep distribution
+  [root@management1 ~]# grep distribution /etc/arcticstack/inventory/group_vars/equipment_*/equipment_profile.yml
     distribution: centos
     distribution_major_version: 8
     distribution_version: 8.2
@@ -99,7 +98,7 @@ to create a new *production* repository:
 
   .. code-block:: text
 
-    [root@management1 ~]# cat /etc/bluebanquise/inventory/group_vars/equipment_X/equipment_profile.yml | grep -E 'distribution|environment'
+    [root@management1 ~]# grep -E 'distribution|environment' /etc/arcticstack/inventory/group_vars/equipment_*/equipment_profile.yml
       distribution: centos
       distribution_major_version: 8
       repositories_environment: production
@@ -126,7 +125,7 @@ For example:
 
 .. code-block:: text
 
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml --diff --check
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml --diff --check
 
 2. If you have multiple managements nodes, update them one after the other, using
 the `--limit` argument, specifying the nodes each time. This can be combined
@@ -136,9 +135,9 @@ For example:
 
 .. code-block:: text
 
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml --limit management1
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml --limit management2
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml --limit management3
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml --limit management1
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml --limit management2
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml --limit management3
 
 Nodes
 =====
@@ -148,7 +147,7 @@ Nodes
 Adding a new node
 -----------------
 
-To add a new node, go into the /etc/bluebanquise/inventory/cluster/nodes folder.
+To add a new node, go into the /etc/arcticstack/inventory/cluster/nodes folder.
 
 Then here, find the file related to the master group of the new node. If you
 need to create a new master group, refer to the related story bellow.
@@ -216,7 +215,7 @@ limiting the execution to the needed roles, using tags. For example:
 
 .. code-block:: text
 
-  ansible-playbook /etc/bluebanquise/playbooks/computes.yml -t hosts_file
+  ansible-playbook /etc/arcticstack/playbooks/computes.yml -t hosts_file
 
 Adding a new range of nodes
 ---------------------------
@@ -276,10 +275,10 @@ You may need to create a new master group, for a new kind of range of equipment.
 
 The stack is fully dynamic regarding groups. The only thing you need is to
 create a new file with the master group name inside of
-/etc/bluebanquise/inventory/cluster/nodes/
+/etc/arcticstack/inventory/cluster/nodes/
 
 For example, if you wish to create a new group "switches", create file
-/etc/bluebanquise/inventory/cluster/nodes/switches.yml and add the following
+/etc/arcticstack/inventory/cluster/nodes/switches.yml and add the following
 content in the file:
 
 .. code-block:: yaml
@@ -301,11 +300,11 @@ here that you wish to create equipment profile equipment_X:
 
 .. code-block:: text
 
-  mkdir /etc/bluebanquise/inventory/group_vars/equipment_X
+  mkdir /etc/arcticstack/inventory/group_vars/equipment_X
 
 Then, if this equipment need to be different than the generic equipment_profile
-configuration (/etc/bluebanquise/inventory/group_vars/all/equipment_all/),
-create new files into /etc/bluebanquise/inventory/group_vars/equipment_X and use
+configuration (/etc/arcticstack/inventory/group_vars/all/equipment_all/),
+create new files into /etc/arcticstack/inventory/group_vars/equipment_X and use
 Ansible precedence mechanism to set your settings.
 
 You can refer to the example inventories in resources/examples/ to see more of
@@ -317,7 +316,7 @@ Adding a custom group
 ---------------------
 
 You can add custom groups in the stack (for your own convenience). To do so, go
-into folder /etc/bluebanquise/inventory/cluster/groups/ .
+into folder /etc/arcticstack/inventory/cluster/groups/ .
 Here, create a new file, called for example *mygroup*, with the following
 content:
 
@@ -343,14 +342,14 @@ When a node fail, you may need to replace it. This means updating its MAC
 address and provision/deploy it again.
 
 To do so, edit the file that contains the node, for example
-/etc/bluebanquise/inventory/cluster/nodes/computes.yml and simply update the MAC
+/etc/arcticstack/inventory/cluster/nodes/computes.yml and simply update the MAC
 address.
 
 Then update the dhcp configuration on the management node:
 
 .. code-block:: text
 
-  ansible-playbook /etc/bluebanquise/playbooks/managements.yml -t dhcp_server
+  ansible-playbook /etc/arcticstack/playbooks/managements.yml -t dhcp_server
 
 The service should already have restarted since an Ansible handler do it when
 some configuration files are updated.
@@ -372,8 +371,8 @@ First check bootset status of the node:
 .. code-block:: text
 
   [root@management1 ]# bootset -n c001 -s
-  [INFO] Loading /etc/bluebanquise/pxe/nodes_parameters.yml
-  [INFO] Loading /etc/bluebanquise/pxe/pxe_parameters.yml
+  [INFO] Loading /etc/bootset/pxe/nodes_parameters.yml
+  [INFO] Loading /etc/bootset/pxe/pxe_parameters.yml
   Diskfull: c001
   [root@management1 ]#
 
@@ -395,8 +394,8 @@ And check again:
 .. code-block:: text
 
   [root@management1 ]# bootset -n c001 -s
-  [INFO] Loading /etc/bluebanquise/pxe/nodes_parameters.yml
-  [INFO] Loading /etc/bluebanquise/pxe/pxe_parameters.yml
+  [INFO] Loading /etc/bootset/pxe/nodes_parameters.yml
+  [INFO] Loading /etc/bootset/pxe/pxe_parameters.yml
   Next boot deployment: c001
   [root@management1 ]#
 

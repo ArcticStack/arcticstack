@@ -10,7 +10,7 @@ Icebergs mechanism allows to split cluster into parts, in order to:
 * Distribute load over multiple managements nodes.
 * Isolate part of the cluster from the others, while keeping if needed an unified interconnect network.
 
-It is important to understand what is an iceberg in BlueBanquise.
+It is important to understand what is an iceberg in ArcticStack.
 
 .. note::
   An iceberg is also often called an *island* in High Performance Computing
@@ -50,7 +50,7 @@ examples:
 .. image:: images/multiple_icebergs_1bis.svg
 
 Note that this architecture is flexible, and can be adapted to create isolated
-icebergs (i.e. having multiple fully isolated clusters in the same BlueBanquise
+icebergs (i.e. having multiple fully isolated clusters in the same ArcticStack
 configuration).
 
 .. warning::
@@ -137,7 +137,7 @@ Create dedicated folder if absent:
 
 .. code-block:: bash
 
-  mkdir /etc/bluebanquise/inventory/cluster/icebergs/
+  mkdir -p /etc/arcticstack/inventory/cluster/icebergs/
 
 Then create file *inventory/cluster/icebergs/iceberg1*,
 and add the following content:
@@ -247,9 +247,9 @@ directory.
 
 .. code-block:: text
 
-  mkdir -p /etc/bluebanquise/inventory/cluster/nodes/iceberg1/
-  mkdir -p /etc/bluebanquise/inventory/cluster/nodes/iceberg2/
-  mv /etc/bluebanquise/inventory/cluster/*.yml /etc/bluebanquise/inventory/cluster/nodes/iceberg1/
+  mkdir -p /etc/arcticstack/inventory/cluster/nodes/iceberg1/
+  mkdir -p /etc/arcticstack/inventory/cluster/nodes/iceberg2/
+  mv /etc/arcticstack/inventory/cluster/*.yml /etc/arcticstack/inventory/cluster/nodes/iceberg1/
 
 A warning may be displayed during playbook execution for now, because
 *nodes/iceberg2/* is still empty.
@@ -321,12 +321,12 @@ Deploy sub management configuration
 -----------------------------------
 
 First, using default strategy (you can use another one), it is needed that mngt2
-mount over nfs the repositories and the BlueBanquise configuration from mngt1.
+mount over nfs the repositories and the ArcticStack configuration from mngt1.
 This to be able to install packages, but also act as a repository server for
 its iceberg, and be able to deploy the configuration on its iceberg nodes.
 
 We need to ensure mngt2 is part of a group that will mount the repositories and
-bluebanquise, in nfs.yml. By default, this group is called
+arcticstack, in nfs.yml. By default, this group is called
 *secondary_managements*.
 
 Create file *inventory/cluster/groups/secondary_managements* with the following
@@ -346,9 +346,9 @@ at least these two exports:
 
     ...
 
-    bluebanquise:
-      mount: /etc/bluebanquise
-      export: /etc/bluebanquise
+    arcticstack:
+      mount: /etc/arcticstack
+      export: /etc/arcticstack
       server: mngt1
       clients_groups:
         - secondary_managements
@@ -385,7 +385,7 @@ Next, we will need a playbook for mngt2. Copy current mngt1 dedicated playbook:
 
 .. code-block:: text
 
-  cp /etc/bluebanquise/playbooks/mngt1.yml /etc/bluebanquise/playbooks/mngt2.yml
+  cp /etc/arcticstack/playbooks/mngt1.yml /etc/arcticstack/playbooks/mngt2.yml
 
 And change target host inside to match mngt2.
 
@@ -404,7 +404,7 @@ iceberg1:
 
 .. code-block:: text
 
-  mngt1# ansible-playbook /etc/bluebanquise/playbooks/mngt2.yml -t repositories_client --extra-vars j2_current_iceberg=iceberg1
+  mngt1# ansible-playbook /etc/arcticstack/playbooks/mngt2.yml -t repositories_client --extra-vars j2_current_iceberg=iceberg1
 
 Packages can now be downloaded from mngt1 to mngt2 and installed on mngt2.
 
@@ -415,9 +415,9 @@ repositories locally and distribute them on iceberg2:
 
 .. code-block:: text
 
-  mngt1# ansible-playbook /etc/bluebanquise/playbooks/mngt2.yml -t nfs_client,repositories_server --extra-vars j2_current_iceberg=iceberg1
+  mngt1# ansible-playbook /etc/arcticstack/playbooks/mngt2.yml -t nfs_client,repositories_server --extra-vars j2_current_iceberg=iceberg1
 
-*/var/www/html/repositories* and */etc/bluebanquise* from mngt1 are now mounted
+*/var/www/html/repositories* and */etc/arcticstack* from mngt1 are now mounted
 on mngt2, and httpd server is running on mngt2.
 
 .. image:: images/multiple_icebergs_5.svg
@@ -427,7 +427,7 @@ Deploy the whole configuration on it:
 
 .. code-block:: text
 
-  mngt1# ansible-playbook /etc/bluebanquise/playbooks/mngt2.yml
+  mngt1# ansible-playbook /etc/arcticstack/playbooks/mngt2.yml
 
 And now mngt2 act as iceberg2 management, and can provide packages to its nodes.
 

@@ -2,9 +2,7 @@
 Roles
 =====
 
-This part is an agregations of all the **BlueBanquise** roles readme.
-
-CORE
+Core
 ====
 
 .. include:: roles/core/access_control/readme.rst
@@ -29,7 +27,7 @@ CORE
 .. include:: roles/core/ssh_slave/readme.rst
 .. include:: roles/core/time/readme.rst
 
-ADDONS
+Add-on
 ======
 
 .. include:: roles/addons/clone/readme.rst
