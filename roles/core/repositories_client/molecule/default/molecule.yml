@@ -10,7 +10,6 @@ platforms:
       - simple
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    privileged: true
     pre_build_image: true
   # Configure environment in repo path
   - name: environment-${INSTANCE_DISTRO:-centos8}
@@ -18,7 +17,6 @@ platforms:
       - environment
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    privileged: true
     pre_build_image: true
   # For advanced configuration
   - name: advanced-${INSTANCE_DISTRO:-centos8}
@@ -26,7 +24,6 @@ platforms:
       - advanced
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    privileged: true
     pre_build_image: true
   # Keep distro repos enabled (CentOS only)
   - name: distrorepos-simple-${INSTANCE_DISTRO:-centos8}
@@ -34,14 +31,12 @@ platforms:
       - distrorepos
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    privileged: true
     pre_build_image: true
   - name: distrorepos-advanced-${INSTANCE_DISTRO:-centos8}
     groups:
       - distrorepos
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    privileged: true
     pre_build_image: true
 provisioner:
   name: ansible

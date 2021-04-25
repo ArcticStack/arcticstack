@@ -8,7 +8,6 @@ platforms:
       - mg_computes
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    privileged: true
     pre_build_image: true
 provisioner:
   name: ansible
