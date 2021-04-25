@@ -10,8 +10,6 @@ platforms:
       - simple
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    capabilities:
-      - "SYS_ADMIN"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
@@ -22,8 +20,6 @@ platforms:
       - environment
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    capabilities:
-      - "SYS_ADMIN"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
@@ -34,8 +30,6 @@ platforms:
       - advanced
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    capabilities:
-      - "SYS_ADMIN"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
@@ -46,8 +40,6 @@ platforms:
       - distrorepos
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    capabilities:
-      - "SYS_ADMIN"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
@@ -57,8 +49,6 @@ platforms:
       - distrorepos
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    capabilities:
-      - "SYS_ADMIN"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true

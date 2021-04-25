@@ -9,8 +9,6 @@ platforms:
       - iceberg1
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    capabilities:
-      - "SYS_ADMIN"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
