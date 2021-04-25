@@ -9,8 +9,6 @@ platforms:
       - firewall
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     command: "/lib/systemd/systemd"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
   - name: firewall-custom
@@ -18,8 +16,6 @@ platforms:
       - firewall
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     command: "/lib/systemd/systemd"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
 provisioner:
