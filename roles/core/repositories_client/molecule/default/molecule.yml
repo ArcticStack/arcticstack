@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: podman
 platforms:
   # For simple configuration
   - name: simple-${INSTANCE_DISTRO:-centos8}

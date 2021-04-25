@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: podman
 platforms:
   - name: ansiblectrl
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
