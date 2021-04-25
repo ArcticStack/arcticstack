@@ -8,6 +8,7 @@ platforms:
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
     pre_build_image: true
+    dns_servers: ['none']
 provisioner:
   name: ansible
 verifier:
