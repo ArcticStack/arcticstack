@@ -12,6 +12,7 @@
   - addons/diskless:
     - fix issues preventing access to nodes booting a livenet image (#525)
     - fix issues with dnf command in the livenet module (#528)
+  - time: allow to set sysconfig OPTIONS for chronyd (#5)
 
 ## 1.4.0
 
