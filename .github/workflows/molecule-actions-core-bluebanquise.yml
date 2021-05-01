@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-python@v1
       - name: Install packages
         run: |
-          pip install tox
+          sudo pip install tox
       - name: Run molecule test for core/bluebanquise
         run: |
-          cd roles/core/bluebanquise && tox
+          cd roles/core/bluebanquise && sudo -E tox
