@@ -8,12 +8,18 @@ platforms:
     groups:
       - firewall
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "NET_ADMIN"
+      - "NET_RAW"
     command: "/lib/systemd/systemd"
     pre_build_image: true
   - name: firewall-custom
     groups:
       - firewall
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "NET_ADMIN"
+      - "NET_RAW"
     command: "/lib/systemd/systemd"
     pre_build_image: true
 provisioner:

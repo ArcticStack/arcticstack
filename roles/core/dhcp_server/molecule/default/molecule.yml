@@ -8,6 +8,9 @@ platforms:
     groups:
       - mg_managements
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "NET_ADMIN"
+      - "NET_RAW"
     override_command: false
     pre_build_image: true
 provisioner:
