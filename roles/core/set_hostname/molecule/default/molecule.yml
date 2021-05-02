@@ -6,6 +6,8 @@ driver:
 platforms:
   - name: instance
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "SYS_ADMIN"
     override_command: false
     pre_build_image: true
 provisioner:
