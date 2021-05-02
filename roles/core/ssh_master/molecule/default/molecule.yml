@@ -26,8 +26,9 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
-  env:
-    ANSIBLE_CONFIG: "${MOLECULE_PROJECT_DIRECTORY}/../../../ansible.cfg"
+  config_options:
+    defaults:
+      jinja2_extensions: jinja2.ext.loopcontrols
   inventory:
     host_vars:
       icebergs-off:

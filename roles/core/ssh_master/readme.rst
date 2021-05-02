@@ -128,6 +128,17 @@ ssh_master_iceberg_jump_target:
 
 In case of issue, try adding verbosity to the ssh invocation to investigate (-vvv).
 
+Configuration
+"""""""""""""
+
+This role requires the Jinja2 Loop Controls extension. To enable this
+extension, update the ansible.cfg with:
+
+.. code-block:: text
+
+  [defaults]
+  jinja2_extensions = jinja2.ext.loopcontrols
+
 Input
 ^^^^^
 
