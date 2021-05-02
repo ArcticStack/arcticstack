@@ -8,36 +8,48 @@ platforms:
     groups:
       - server
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "SYS_TIME"
     override_command: false
     pre_build_image: true
   - name: server-ext-servers
     groups:
       - server
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "SYS_TIME"
     override_command: false
     pre_build_image: true
   - name: client-ext-pool
     groups:
       - client
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "SYS_TIME"
     override_command: false
     pre_build_image: true
   - name: client-ext-servers
     groups:
       - client
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "SYS_TIME"
     override_command: false
     pre_build_image: true
   - name: client-single-source
     groups:
       - client
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "SYS_TIME"
     override_command: false
     pre_build_image: true
   - name: client-multi-sources
     groups:
       - client
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
+    capabilities:
+      - "SYS_TIME"
     override_command: false
     pre_build_image: true
   - name: client-no-start
