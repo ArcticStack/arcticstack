@@ -2,17 +2,13 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: podman
 platforms:
   - name: instance
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
     override_command: false
-    capabilities:
-      - "SYS_ADMIN"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
     pre_build_image: true
+    dns_servers: ['none']
 provisioner:
   name: ansible
 verifier:

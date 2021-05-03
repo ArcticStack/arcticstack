@@ -2,18 +2,16 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: podman
 platforms:
   - name: management1
     groups:
       - mg_managements
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
-    override_command: false
     capabilities:
-      - "SYS_ADMIN"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
+      - "NET_ADMIN"
+      - "NET_RAW"
+    override_command: false
     pre_build_image: true
 provisioner:
   name: ansible

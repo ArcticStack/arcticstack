@@ -2,7 +2,7 @@
 - name: Prepare
   hosts: all
   tasks:
-    - name: "Remove epel-release from Docker image"
+    - name: "Remove epel-release from container image"
       package:
         name: epel-release
         state: absent

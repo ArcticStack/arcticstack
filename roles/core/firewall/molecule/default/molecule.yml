@@ -2,29 +2,25 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: podman
 platforms:
   - name: firewall-stock
     groups:
       - firewall
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
-    command: "/lib/systemd/systemd"
     capabilities:
-      - "SYS_ADMIN"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
+      - "NET_ADMIN"
+      - "NET_RAW"
+    command: "/lib/systemd/systemd"
     pre_build_image: true
   - name: firewall-custom
     groups:
       - firewall
     image: "quay.io/actatux/ansible-${MOLECULE_DISTRO:-centos:8}"
-    command: "/lib/systemd/systemd"
     capabilities:
-      - "SYS_ADMIN"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
+      - "NET_ADMIN"
+      - "NET_RAW"
+    command: "/lib/systemd/systemd"
     pre_build_image: true
 provisioner:
   name: ansible
